@@ -11,7 +11,7 @@
               <input type="text" v-model="register.username" placeholder="用户名">
               <input type="password" v-model="register.password" placeholder="密码">
               <p :class="{error: register.isError}">{{register.notice}}</p>
-              <div class="button" @click="onReguster">创建账号</div>
+              <div class="button" @click="onRegister">创建账号</div>
             </div>
             </transition>
             <h3 @click="showLogin">登录</h3>
@@ -31,6 +31,11 @@
 </template>
 
 <script>
+import {Auth} from "../apis/auth";
+
+Auth.getInfo().then(data => {
+  console.log(data)
+})
 export default {
   name: 'Login',
   data() {
@@ -60,7 +65,7 @@ export default {
       this.isShowRegister = false;
       this.isShowLogin = true
     },
-    onReguster() {
+    onRegister() {
       let result = this.validUsername(this.register.username)
       if(!result.isValid){
         this.register.isError = true
@@ -76,6 +81,12 @@ export default {
       this.register.isError = false
       this.register.notice = ''
       console.log('注册，用户名是', this.register.username,'密码是',this.register.password)
+      Auth.register(
+        {username: this.register.username,
+          password: this.register.password}
+          ).then(data => {
+        console.log(data)
+      })
     },
     onLogin() {
       let result = this.validUsername(this.login.username)
@@ -93,6 +104,12 @@ export default {
       this.login.isError = false
       this.login.notice = ''
       console.log('登录，用户名是', this.login.username,'密码是',this.login.password)
+      Auth.login(
+        {username: this.login.username,
+          password: this.login.password}
+        ).then(data => {
+        console.log(data)
+      })
     },
     validUsername(username) {
       return {
