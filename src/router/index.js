@@ -12,7 +12,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Note
+      component: Login
     },
     {
       path: '/login',

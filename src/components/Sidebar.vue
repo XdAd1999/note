@@ -21,8 +21,10 @@ export default {
   components: {Avatar},
   methods: {
     logout() {
-      Auth.logout().then(data => {
-          console.log(data)
+      this.$router.push({path:'login'})
+      Auth.logout()
+        .then(data => {
+
         })
     }
   }
